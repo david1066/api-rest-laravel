@@ -1,0 +1,62 @@
+<div class="col-lg-12 mt-4" *ngIf="identity && token">
+
+  
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Correo</th>
+                <th scope="col">Role</th>
+                <th scope="col">Documento</th>
+                <th scope="col">Accion</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users" >
+
+
+                <th scope="row" *ngIf="identity.role=='seller' && user.role=='client'  || identity.role=='admin'" >{{user.name}}</th>
+                <td *ngIf="identity.role=='seller' && user.role=='client' || identity.role=='admin'">{{user.surname}}</td>
+                <td *ngIf="identity.role=='seller' && user.role=='client' || identity.role=='admin'">{{user.email}}</td>
+                <td *ngIf="identity.role=='seller' && user.role=='client' || identity.role=='admin'">{{user.role}}</td>
+                <td *ngIf="identity.role=='seller' && user.role=='client' || identity.role=='admin'">{{user.typedocument +' : ' +user.document}}</td>
+                <td *ngIf="identity.role=='seller' && user.role=='client' || identity.role=='admin'">
+                    <a [routerLink]="['/actualiza-usuario', user.id]" class="btn btn-sm btn-warning me-2">Editar</a>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"  
+                    [attr.data-bs-target]="'#modal'+user.id">
+                     Borrar
+                    </button>
+          
+                    <!-- Modal -->
+                    <div class="modal fade" id="{{'modal'+user.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                      aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">¿Estas seguro de querer borrar este elemento?</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            Vas a borrar a {{user.name +' '+ user.surname }} para siempre...
+                          </div>
+                          <div class="modal-footer">
+          
+                            <a (click)="deleteUser(user.id)" type="button" class="btn btn-danger"  data-bs-dismiss="modal">Borrar</a>
+                            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Cancelar</button>
+                            
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+          
+
+
+                </td>
+            </tr>
+
+
+        </tbody>
+    </table>
+</div>
